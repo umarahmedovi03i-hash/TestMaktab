@@ -31,7 +31,17 @@ jobs:
         run: |
           mkdir project
           unzip -q TestMaktab.zip -d project
-                    sed -i 's/1\.8/17/g; s/VERSION_1_8/VERSION_17/g' project/app/build.gradle.kts
+                              python3 - <<'PY'
+          from pathlib import Path
+          p = Path("project/app/build.gradle.kts")
+          s = p.read_text()
+          s = s.replace("android {", """android {
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }""", 1)
+          p.write_text(s)
+          PY
       - name: Build APK
         working-directory: project
         run: gradle assembleDebug --no-daemon
