@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir project
           unzip -q TestMaktab.zip -d project
-
+          sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' project/app/build.gradle.kts
       - name: Build APK
         working-directory: project
         run: gradle assembleDebug --no-daemon
