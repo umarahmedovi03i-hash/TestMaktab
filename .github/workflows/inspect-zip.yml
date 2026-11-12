@@ -1,0 +1,19 @@
+name: Inspect TestMaktab ZIP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect ZIP
+        run: |
+          unzip -l TestMaktab.zip
+          mkdir extracted
+          unzip -q TestMaktab.zip -d extracted
+          find extracted -maxdepth 4 -type f | sort
